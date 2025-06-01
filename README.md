@@ -1,0 +1,1 @@
+# SoloKart-Insight---SaaS-tool
