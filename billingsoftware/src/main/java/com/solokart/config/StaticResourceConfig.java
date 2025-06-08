@@ -1,4 +1,4 @@
-package in.bushansirgur.billingsoftware.config;
+package com.solokart.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

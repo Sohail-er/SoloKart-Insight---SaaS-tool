@@ -1,8 +1,5 @@
-package in.bushansirgur.billingsoftware.service.impl;
+package com.solokart.service.impl;
 
-import in.bushansirgur.billingsoftware.entity.UserEntity;
-import in.bushansirgur.billingsoftware.io.UserResponse;
-import in.bushansirgur.billingsoftware.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.solokart.entity.UserEntity;
+import com.solokart.io.UserResponse;
+import com.solokart.repository.UserRepository;
 
 import java.util.Collections;
 

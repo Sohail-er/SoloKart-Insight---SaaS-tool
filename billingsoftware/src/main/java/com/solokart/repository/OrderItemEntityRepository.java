@@ -1,7 +1,8 @@
-package in.bushansirgur.billingsoftware.repository;
+package com.solokart.repository;
 
-import in.bushansirgur.billingsoftware.entity.OrderItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.solokart.entity.OrderItemEntity;
 
 public interface OrderItemEntityRepository extends JpaRepository<OrderItemEntity, Long> {
 }

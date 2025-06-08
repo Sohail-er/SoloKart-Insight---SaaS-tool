@@ -1,10 +1,5 @@
-package in.bushansirgur.billingsoftware.controller;
+package com.solokart.controller;
 
-import in.bushansirgur.billingsoftware.io.AuthRequest;
-import in.bushansirgur.billingsoftware.io.AuthResponse;
-import in.bushansirgur.billingsoftware.service.UserService;
-import in.bushansirgur.billingsoftware.service.impl.AppUserDetailsService;
-import in.bushansirgur.billingsoftware.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.solokart.io.AuthRequest;
+import com.solokart.io.AuthResponse;
+import com.solokart.service.UserService;
+import com.solokart.service.impl.AppUserDetailsService;
+import com.solokart.util.JwtUtil;
 
 import java.util.Map;
 

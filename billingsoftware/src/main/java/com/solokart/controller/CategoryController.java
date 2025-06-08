@@ -1,10 +1,11 @@
-package in.bushansirgur.billingsoftware.controller;
+package com.solokart.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.bushansirgur.billingsoftware.io.CategoryRequest;
-import in.bushansirgur.billingsoftware.io.CategoryResponse;
-import in.bushansirgur.billingsoftware.service.CategoryService;
+import com.solokart.io.CategoryRequest;
+import com.solokart.io.CategoryResponse;
+import com.solokart.service.CategoryService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1.0")
 @RequiredArgsConstructor
 public class CategoryController {
 

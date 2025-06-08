@@ -1,7 +1,5 @@
-package in.bushansirgur.billingsoftware.config;
+package com.solokart.config;
 
-import in.bushansirgur.billingsoftware.filter.JwtRequestFilter;
-import in.bushansirgur.billingsoftware.service.impl.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +21,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.solokart.filter.JwtRequestFilter;
+import com.solokart.service.impl.AppUserDetailsService;
+
 import java.util.List;
 
 @Configuration
@@ -34,7 +35,7 @@ public class SecurityConfig {
     private final JwtRequestFilter jwtRequestFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/encode", "/uploads/**")
@@ -48,7 +49,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

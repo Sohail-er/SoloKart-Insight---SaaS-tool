@@ -1,4 +1,4 @@
-package in.bushansirgur.billingsoftware.util;
+package com.solokart.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

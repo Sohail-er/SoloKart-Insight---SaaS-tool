@@ -1,12 +1,13 @@
-package in.bushansirgur.billingsoftware.repository;
+package com.solokart.repository;
 
-import in.bushansirgur.billingsoftware.entity.OrderEntity;
-import in.bushansirgur.billingsoftware.entity.UserEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.solokart.entity.OrderEntity;
+import com.solokart.entity.UserEntity;
 
 import java.time.LocalDate;
 import java.util.List;

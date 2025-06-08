@@ -1,14 +1,15 @@
-package in.bushansirgur.billingsoftware.service.impl;
+package com.solokart.service.impl;
 
-import in.bushansirgur.billingsoftware.entity.UserEntity;
-import in.bushansirgur.billingsoftware.io.UserRequest;
-import in.bushansirgur.billingsoftware.io.UserResponse;
-import in.bushansirgur.billingsoftware.repository.UserRepository;
-import in.bushansirgur.billingsoftware.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.solokart.entity.UserEntity;
+import com.solokart.io.UserRequest;
+import com.solokart.io.UserResponse;
+import com.solokart.repository.UserRepository;
+import com.solokart.service.UserService;
 
 import java.util.List;
 import java.util.UUID;

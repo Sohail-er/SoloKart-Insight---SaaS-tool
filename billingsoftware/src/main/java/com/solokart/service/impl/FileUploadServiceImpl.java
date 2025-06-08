@@ -1,6 +1,5 @@
-package in.bushansirgur.billingsoftware.service.impl;
+package com.solokart.service.impl;
 
-import in.bushansirgur.billingsoftware.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -8,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.solokart.service.FileUploadService;
 
 import java.io.IOException;
 import java.nio.file.Files;

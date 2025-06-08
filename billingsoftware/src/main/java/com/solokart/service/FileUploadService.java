@@ -1,4 +1,4 @@
-package in.bushansirgur.billingsoftware.service;
+package com.solokart.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

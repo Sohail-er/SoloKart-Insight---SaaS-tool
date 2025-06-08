@@ -1,11 +1,12 @@
-package in.bushansirgur.billingsoftware.service.impl;
+package com.solokart.service.impl;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-import in.bushansirgur.billingsoftware.io.OrderResponse;
-import in.bushansirgur.billingsoftware.io.RazorpayOrderResponse;
-import in.bushansirgur.billingsoftware.service.RazorpayService;
+import com.solokart.io.OrderResponse;
+import com.solokart.io.RazorpayOrderResponse;
+import com.solokart.service.RazorpayService;
+
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;

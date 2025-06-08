@@ -1,7 +1,8 @@
-package in.bushansirgur.billingsoftware.repository;
+package com.solokart.repository;
 
-import in.bushansirgur.billingsoftware.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.solokart.entity.ItemEntity;
 
 import java.util.Optional;
 

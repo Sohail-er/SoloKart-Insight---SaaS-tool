@@ -1,10 +1,11 @@
-package in.bushansirgur.billingsoftware.controller;
+package com.solokart.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.bushansirgur.billingsoftware.io.ItemRequest;
-import in.bushansirgur.billingsoftware.io.ItemResponse;
-import in.bushansirgur.billingsoftware.service.ItemService;
+import com.solokart.io.ItemRequest;
+import com.solokart.io.ItemResponse;
+import com.solokart.service.ItemService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,9 @@
-package in.bushansirgur.billingsoftware.service;
+package com.solokart.service;
 
-import in.bushansirgur.billingsoftware.io.ItemRequest;
-import in.bushansirgur.billingsoftware.io.ItemResponse;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.solokart.io.ItemRequest;
+import com.solokart.io.ItemResponse;
 
 import java.io.IOException;
 import java.util.List;

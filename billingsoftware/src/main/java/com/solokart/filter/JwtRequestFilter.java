@@ -1,7 +1,5 @@
-package in.bushansirgur.billingsoftware.filter;
+package com.solokart.filter;
 
-import in.bushansirgur.billingsoftware.service.impl.AppUserDetailsService;
-import in.bushansirgur.billingsoftware.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.solokart.service.impl.AppUserDetailsService;
+import com.solokart.util.JwtUtil;
 
 import java.io.IOException;
 

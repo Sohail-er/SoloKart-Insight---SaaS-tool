@@ -1,17 +1,18 @@
-package in.bushansirgur.billingsoftware.service.impl;
+package com.solokart.service.impl;
 
-import in.bushansirgur.billingsoftware.entity.CategoryEntity;
-import in.bushansirgur.billingsoftware.io.CategoryRequest;
-import in.bushansirgur.billingsoftware.io.CategoryResponse;
-import in.bushansirgur.billingsoftware.repository.CategoryRepository;
-import in.bushansirgur.billingsoftware.repository.ItemRepository;
-import in.bushansirgur.billingsoftware.service.CategoryService;
-import in.bushansirgur.billingsoftware.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.solokart.entity.CategoryEntity;
+import com.solokart.io.CategoryRequest;
+import com.solokart.io.CategoryResponse;
+import com.solokart.repository.CategoryRepository;
+import com.solokart.repository.ItemRepository;
+import com.solokart.service.CategoryService;
+import com.solokart.service.FileUploadService;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,15 +1,16 @@
-package in.bushansirgur.billingsoftware.controller;
+package com.solokart.controller;
 
-import in.bushansirgur.billingsoftware.io.DashboardResponse;
-import in.bushansirgur.billingsoftware.io.OrderResponse;
-import in.bushansirgur.billingsoftware.io.SalesByUserResponse;
-import in.bushansirgur.billingsoftware.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.solokart.io.DashboardResponse;
+import com.solokart.io.OrderResponse;
+import com.solokart.io.SalesByUserResponse;
+import com.solokart.service.OrderService;
 
 import java.time.LocalDate;
 import java.util.List;

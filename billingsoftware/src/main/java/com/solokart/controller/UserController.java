@@ -1,13 +1,14 @@
-package in.bushansirgur.billingsoftware.controller;
+package com.solokart.controller;
 
-import in.bushansirgur.billingsoftware.io.UserRequest;
-import in.bushansirgur.billingsoftware.io.UserResponse;
-import in.bushansirgur.billingsoftware.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.solokart.io.UserRequest;
+import com.solokart.io.UserResponse;
+import com.solokart.service.UserService;
 
 import java.util.List;
 

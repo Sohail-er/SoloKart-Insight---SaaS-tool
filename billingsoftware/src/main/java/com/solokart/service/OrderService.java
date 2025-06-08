@@ -1,10 +1,11 @@
-package in.bushansirgur.billingsoftware.service;
+package com.solokart.service;
 
-import in.bushansirgur.billingsoftware.io.OrderRequest;
-import in.bushansirgur.billingsoftware.io.OrderResponse;
-import in.bushansirgur.billingsoftware.io.PaymentVerificationRequest;
-import in.bushansirgur.billingsoftware.io.SalesByUserResponse;
 import org.springframework.data.domain.Pageable;
+
+import com.solokart.io.OrderRequest;
+import com.solokart.io.OrderResponse;
+import com.solokart.io.PaymentVerificationRequest;
+import com.solokart.io.SalesByUserResponse;
 
 import java.time.LocalDate;
 import java.util.List;

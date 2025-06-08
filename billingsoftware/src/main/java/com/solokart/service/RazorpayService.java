@@ -1,7 +1,7 @@
-package in.bushansirgur.billingsoftware.service;
+package com.solokart.service;
 
 import com.razorpay.RazorpayException;
-import in.bushansirgur.billingsoftware.io.RazorpayOrderResponse;
+import com.solokart.io.RazorpayOrderResponse;
 
 public interface RazorpayService {
 

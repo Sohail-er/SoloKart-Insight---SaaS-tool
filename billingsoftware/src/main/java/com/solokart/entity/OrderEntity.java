@@ -1,7 +1,5 @@
-package in.bushansirgur.billingsoftware.entity;
+package com.solokart.entity;
 
-import in.bushansirgur.billingsoftware.io.PaymentDetails;
-import in.bushansirgur.billingsoftware.io.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +9,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.solokart.io.PaymentDetails;
+import com.solokart.io.PaymentMethod;
 
 @Entity
 @Table(name = "tbl_orders")
