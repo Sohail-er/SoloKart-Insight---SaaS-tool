@@ -26,9 +26,10 @@ const Login = () => {
         try {
             const response = await login(data);
             if (response.status === 200) {
-                toast.success("Login successfull");
+                toast.success("Login successful");
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("role", response.data.role);
+                localStorage.setItem("name", response.data.name);
                 setAuthData(response.data.token, response.data.role);
                 navigate("/dashboard");
             }
@@ -65,7 +66,7 @@ const Login = () => {
                                 <input type="password" name="password" id="password" placeholder="**********" className="form-control" onChange={onChangeHandler} value={data.password} />
                             </div>
                             <div className="d-grid">
-                                <button type="sumbit" className="btn btn-dark btn-lg" disabled={loading}>
+                                <button type="submit" className="btn btn-dark btn-lg" disabled={loading}>
                                     {loading ? "Loading..." : "Sign in"}
                                 </button>
                             </div>

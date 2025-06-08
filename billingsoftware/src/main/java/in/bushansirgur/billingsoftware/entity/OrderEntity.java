@@ -30,6 +30,10 @@ public class OrderEntity {
     private Double grandTotal;
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<OrderItemEntity> items = new ArrayList<>();

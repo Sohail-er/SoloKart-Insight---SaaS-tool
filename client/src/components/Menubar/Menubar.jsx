@@ -65,15 +65,6 @@ const Menubar = () => {
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
-                                <a href="#!" className="dropdown-item">
-                                    Settings
-                                </a>
-                                <a href="#!" className="dropdown-item">
-                                    Activity log
-                                </a>
-                                <li>
-                                    <hr className="dropdown-divider" />
-                                </li>
                                 <a href="#!" className="dropdown-item" onClick={logout}>
                                     Logout
                                 </a>

@@ -28,9 +28,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final AppUserDetailsService appUserDetailsService;
     private final UserService userService;
-
     private final JwtUtil jwtUtil;
-
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) throws Exception {
@@ -38,7 +36,8 @@ public class AuthController {
         final UserDetails userDetails = appUserDetailsService.loadUserByUsername(request.getEmail());
         final String jwtToken = jwtUtil.generateToken(userDetails);
         String role = userService.getUserRole(request.getEmail());
-        return new AuthResponse(request.getEmail(), jwtToken, role);
+        String name = userService.getUserName(request.getEmail());
+        return new AuthResponse(request.getEmail(), jwtToken, role, name);
     }
 
     private void authenticate(String email, String password) throws Exception {

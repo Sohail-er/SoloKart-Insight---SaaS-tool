@@ -3,6 +3,7 @@ package in.bushansirgur.billingsoftware.service;
 import in.bushansirgur.billingsoftware.io.OrderRequest;
 import in.bushansirgur.billingsoftware.io.OrderResponse;
 import in.bushansirgur.billingsoftware.io.PaymentVerificationRequest;
+import in.bushansirgur.billingsoftware.io.SalesByUserResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
@@ -23,4 +24,6 @@ public interface OrderService {
     Long countByOrderDate(LocalDate date);
 
     List<OrderResponse> findRecentOrders();
+
+    List<SalesByUserResponse> getTotalSalesGroupedByUser();
 }

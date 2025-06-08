@@ -51,9 +51,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUserRole(String email) {
-        UserEntity existingUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for the email: "+email));
-        return existingUser.getRole();
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getRole();
+    }
+
+    @Override
+    public String getUserName(String email) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getName();
     }
 
     @Override

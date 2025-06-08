@@ -1,14 +1,21 @@
 package in.bushansirgur.billingsoftware.service.impl;
 
+import com.razorpay.RazorpayException;
+import com.razorpay.Utils;
 import in.bushansirgur.billingsoftware.entity.OrderEntity;
 import in.bushansirgur.billingsoftware.entity.OrderItemEntity;
+import in.bushansirgur.billingsoftware.entity.UserEntity;
 import in.bushansirgur.billingsoftware.io.*;
 import in.bushansirgur.billingsoftware.repository.OrderEntityRepository;
+import in.bushansirgur.billingsoftware.repository.UserRepository;
 import in.bushansirgur.billingsoftware.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,11 +26,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     
-    private final OrderEntityRepository orderEntityRepository; 
+    private final OrderEntityRepository orderEntityRepository;
+    private final UserRepository userRepository;
+
+    @Value("${razorpay.key.secret}")
+    private String razorpayKeySecret;
 
     @Override
     public OrderResponse createOrder(OrderRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserEntity currentUser = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         OrderEntity newOrder = convertToOrderEntity(request);
+        newOrder.setUser(currentUser);
 
         PaymentDetails paymentDetails = new PaymentDetails();
         paymentDetails.setStatus(newOrder.getPaymentMethod() == PaymentMethod.CASH ?
@@ -35,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
         newOrder.setItems(orderItems);
         
+        newOrder.setOrderId("ORD"+System.currentTimeMillis());
         newOrder = orderEntityRepository.save(newOrder);
         return convertToResponse(newOrder);
     }
@@ -49,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderResponse convertToResponse(OrderEntity newOrder) {
-        return OrderResponse.builder()
+        OrderResponse.OrderResponseBuilder responseBuilder = OrderResponse.builder()
                 .orderId(newOrder.getOrderId())
                 .customerName(newOrder.getCustomerName())
                 .phoneNumber(newOrder.getPhoneNumber())
@@ -61,8 +79,12 @@ public class OrderServiceImpl implements OrderService {
                         .map(this::convertToItemResponse)
                         .collect(Collectors.toList()))
                 .paymentDetails(newOrder.getPaymentDetails())
-                .createdAt(newOrder.getCreatedAt())
-                .build();
+                .createdAt(newOrder.getCreatedAt());
+        
+        if (newOrder.getUser() != null) {
+            responseBuilder.userName(newOrder.getUser().getName()); // Assuming UserEntity has a getName() method
+        }
+        return responseBuilder.build();
                 
     }
 
@@ -96,10 +118,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponse> getLatestOrders() {
-        return orderEntityRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserEntity currentUser = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return orderEntityRepository.findAllByOrderByCreatedAtDesc()
+                    .stream()
+                    .map(this::convertToResponse)
+                    .collect(Collectors.toList());
+        } else {
+            return orderEntityRepository.findAllByUserOrderByCreatedAtDesc(currentUser)
+                    .stream()
+                    .map(this::convertToResponse)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -110,6 +144,12 @@ public class OrderServiceImpl implements OrderService {
         if (!verifyRazorpaySignature(request.getRazorpayOrderId(),
                 request.getRazorpayPaymentId(),
                 request.getRazorpaySignature())) {
+            
+            PaymentDetails paymentDetails = existingOrder.getPaymentDetails();
+            paymentDetails.setStatus(PaymentDetails.PaymentStatus.FAILED);
+            existingOrder.setPaymentDetails(paymentDetails);
+            orderEntityRepository.save(existingOrder);
+
             throw new RuntimeException("Payment verification failed");
         }
 
@@ -126,23 +166,76 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Double sumSalesByDate(LocalDate date) {
-        return orderEntityRepository.sumSalesByDate(date);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserEntity currentUser = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            Double totalSales = orderEntityRepository.sumSalesByDate(date);
+            return totalSales != null ? totalSales : 0.0;
+        } else {
+            Double userSales = orderEntityRepository.sumSalesByDateAndUser(date, currentUser);
+            return userSales != null ? userSales : 0.0;
+        }
     }
 
     @Override
     public Long countByOrderDate(LocalDate date) {
-        return orderEntityRepository.countByOrderDate(date);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserEntity currentUser = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            Long totalCount = orderEntityRepository.countByOrderDate(date);
+            return totalCount != null ? totalCount : 0L;
+        } else {
+            Long userCount = orderEntityRepository.countByOrderDateAndUser(date, currentUser);
+            return userCount != null ? userCount : 0L;
+        }
     }
 
     @Override
     public List<OrderResponse> findRecentOrders() {
-        return orderEntityRepository.findRecentOrders(PageRequest.of(0, 5))
-                .stream()
-                .map(orderEntity -> convertToResponse(orderEntity))
-                .collect(Collectors.toList());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserEntity currentUser = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return orderEntityRepository.findRecentOrders(PageRequest.of(0, 5))
+                    .stream()
+                    .map(orderEntity -> convertToResponse(orderEntity))
+                    .collect(Collectors.toList());
+        } else {
+            return orderEntityRepository.findRecentOrdersByUser(currentUser, PageRequest.of(0, 5))
+                    .stream()
+                    .map(orderEntity -> convertToResponse(orderEntity))
+                    .collect(Collectors.toList());
+        }
     }
 
     private boolean verifyRazorpaySignature(String razorpayOrderId, String razorpayPaymentId, String razorpaySignature) {
-        return true;
+        try {
+            JSONObject options = new JSONObject();
+            options.put("razorpay_order_id", razorpayOrderId);
+            options.put("razorpay_payment_id", razorpayPaymentId);
+            options.put("razorpay_signature", razorpaySignature);
+
+            Utils.verifyPaymentSignature(options, razorpayKeySecret);
+            return true;
+        } catch (RazorpayException e) {
+            System.err.println("Razorpay signature verification failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public List<SalesByUserResponse> getTotalSalesGroupedByUser() {
+        List<Object[]> results = orderEntityRepository.findTotalSalesGroupedByUser();
+        return results.stream()
+                .map(obj -> new SalesByUserResponse((String) obj[0], (Double) obj[1]))
+                .collect(Collectors.toList());
     }
 }

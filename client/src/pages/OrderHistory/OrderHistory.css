@@ -3,6 +3,7 @@
     height: calc(100vh - 5rem);
     box-sizing: border-box;
     background-color: #2c3335;
+    overflow-y: auto;
 }
 
 .orders-history-container h2 {

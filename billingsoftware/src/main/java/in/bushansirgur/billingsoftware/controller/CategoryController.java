@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1.0")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -23,6 +24,7 @@ public class CategoryController {
 
     @PostMapping("/admin/categories")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
     public CategoryResponse addCategory(@RequestPart("category") String categoryString,
                                         @RequestPart("file") MultipartFile file) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -31,11 +33,10 @@ public class CategoryController {
             request = objectMapper.readValue(categoryString, CategoryRequest.class);
             return categoryService.add(request, file);
         } catch(JsonProcessingException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception occred while parsing the json: "+ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception occurred while parsing the json: "+ex.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @GetMapping("/categories")
@@ -45,6 +46,7 @@ public class CategoryController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/admin/categories/{categoryId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void remove(@PathVariable String categoryId) {
         try {
             categoryService.delete(categoryId);
