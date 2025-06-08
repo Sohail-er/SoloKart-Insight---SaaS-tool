@@ -49,11 +49,11 @@ const OrderHistory = () => {
     }
 
     if (loading) {
-        return <div className="text-center py-4">Loading orders...</div>
+        return <div className="orders-history-container text-light text-center py-4">Loading orders...</div>
     }
 
     if (orders.length === 0) {
-        return <div className="text-center py-4">No orders found</div>
+        return <div className="orders-history-container text-light text-center py-4">No orders found</div>
     }
 
     if (userRole === 'ROLE_ADMIN') {

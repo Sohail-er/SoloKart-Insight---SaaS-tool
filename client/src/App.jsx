@@ -11,6 +11,7 @@ import OrderHistory from "./pages/OrderHistory/OrderHistory.jsx";
 import {useContext} from "react";
 import {AppContext} from "./context/AppContext.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
+import AboutUs from "./pages/AboutUs/AboutUs.jsx";
 
 const App = () => {
     const location = useLocation();
@@ -48,6 +49,7 @@ const App = () => {
                 <Route path="/items" element={<ProtectedRoute element={<ManageItems />} allowedRoles={["ROLE_ADMIN"]} /> } />
 
                 <Route path="/login" element={<LoginRoute element={<Login />} />} />
+                <Route path="/aboutus" element={ <AboutUs /> } />
                 <Route path="/orders" element={<OrderHistory />} />
                 <Route path="/" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
