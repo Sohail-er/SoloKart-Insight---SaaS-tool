@@ -22,7 +22,36 @@
     flex: 0.3;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 16px;
+    padding: 16px;    height: auto;
     height: 100%;
     box-sizing: border-box;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+    .items-container {
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+        height: auto;
+    }
+
+    .left-column,
+    .right-column {
+        flex: 1;
+    }
+
+    .right-column {
+        height: 50%; /* Adjust height for small devices */
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+    .right-column {
+        height: 50%; /* Adjust height for medium devices */
+    }
+}
+
+.items-container.text-light {
+ color: #f8f9fa; /* This ensures the text is light, adjust as needed */
 }

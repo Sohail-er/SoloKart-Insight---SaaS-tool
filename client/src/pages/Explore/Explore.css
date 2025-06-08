@@ -56,7 +56,21 @@
     border-radius: 8px;
 }
 
-
+@media (max-width: 768px) {
+    .explore-container {
+        flex-direction: column;
+        height: auto; /* Allow height to be determined by content */
+    }
+    
+    .left-column {
+        flex: auto;
+    }
+    
+    .right-column {
+        flex: auto;
+        width: 100%;
+    }
+}
 
 
 

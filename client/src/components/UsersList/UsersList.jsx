@@ -22,7 +22,7 @@ const UsersList = ({users, setUsers}) => {
 
 
     return (
-        <div className="category-list-container" style={{height:'100vh', overflowY: 'auto', overflowX: 'hidden'}}>
+        <div className="category-list-container" style={{height:'50vh', overflowY: 'auto', overflowX: 'hidden'}}>
             <div className="row pe-2">
                 <div className="input-group mb-3">
                     <input type="text"

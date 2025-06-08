@@ -1,6 +1,7 @@
 .category-container {
     display: flex;
     gap: 20px;
+
     padding: 20px;
     height: calc(100vh - 5rem);
     box-sizing: border-box;
@@ -25,4 +26,18 @@
     padding: 16px;
     height: 100%;
     box-sizing: border-box;
+}
+
+/* Media query for small screens */
+@media screen and (max-width: 768px) {
+    .category-container {
+        flex-direction: column; /* Stack divs vertically */
+        height: auto; /* Adjust height for content */
+    }
+
+    .left-column,
+ .right-column {
+ flex: 1; /* Allow columns to take full width */
+ height: auto; /* Adjust height for content */
+    }
 }

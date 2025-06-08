@@ -65,7 +65,7 @@ const Menubar = () => {
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
-                                <a href="#!" className="dropdown-item" onClick={logout}>
+                                <a href="#!" className="dropdown-item" onClick={logout} style={{color: "white"}}>
                                     Logout
                                 </a>
                             </li>
