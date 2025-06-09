@@ -45,6 +45,6 @@ public class ItemEntity {
     private String imgUrl;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private CategoryEntity category;
 }
