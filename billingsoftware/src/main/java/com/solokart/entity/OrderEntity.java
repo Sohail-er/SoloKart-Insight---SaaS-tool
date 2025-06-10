@@ -12,6 +12,8 @@ import java.util.List;
 
 import com.solokart.io.PaymentDetails;
 import com.solokart.io.PaymentMethod;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "tbl_orders")
@@ -33,10 +35,12 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity user;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
+    @Builder.Default
     private List<OrderItemEntity> items = new ArrayList<>();
 
     @Embedded

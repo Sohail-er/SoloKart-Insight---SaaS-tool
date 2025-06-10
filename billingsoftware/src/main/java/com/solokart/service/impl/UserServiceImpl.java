@@ -6,9 +6,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.solokart.entity.UserEntity;
+import com.solokart.entity.OrderEntity;
 import com.solokart.io.UserRequest;
 import com.solokart.io.UserResponse;
 import com.solokart.repository.UserRepository;
+import com.solokart.repository.OrderEntityRepository;
 import com.solokart.service.UserService;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final OrderEntityRepository orderRepository;
 
     @Override
     public UserResponse createUser(UserRequest request) {
@@ -76,6 +79,12 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String id) {
         UserEntity existingUser = userRepository.findByUserId(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        
+        // Delete all orders associated with this user
+        List<OrderEntity> orders = orderRepository.findAllByUserOrderByCreatedAtDesc(existingUser);
+        orderRepository.deleteAll(orders);
+        
+        // Finally delete the user
         userRepository.delete(existingUser);
     }
 }

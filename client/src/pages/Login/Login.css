@@ -1,24 +1,245 @@
-.login-background {
+/* Login.css */
+
+:root {
+    --primary-bg-dark: #1a1d20;
+    --secondary-bg-dark: #212529;
+    --teal-green: #00b894;
+    --teal-green-dark: #00a07e;
+    --text-light: #f8f9fa;
+    --text-muted: #adb5bd;
+    --gradient-user: linear-gradient(145deg, #00b894, #00d8a7);
+    --gradient-admin: linear-gradient(145deg, #00b894, #00d8a7);
+    --admin-bg: rgba(0, 184, 148, 0.08);
+}
+
+.login-container {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+    ), url("../../assets/login-bg.jpg"); /* Adjust path if necessary */
+    background-size: cover;
+    background-position: center;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(
-        rgba(255, 255, 255, 0.5),
-        rgba(255, 255, 255, 0.5)
-    ), url("../../assets/login-bg.jpg");
-    background-size: cover;
-    background-position: center;
+    padding: 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.card {
-    background-color: white;
+.login-options {
+    display: flex;
+    gap: 2rem;
+    max-width: 1000px;
     width: 100%;
-    max-width: 480px;
-    border: none;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.card-body {
-    padding: 2rem;
+.login-card {
+    background-color: rgba(33, 37, 41, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 450px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transition: all 0.3s ease;
+}
+
+.user-card::before {
+    background: var(--gradient-user);
+}
+
+.admin-card::before {
+    background: var(--gradient-admin);
+}
+
+.user-card {
+    border: 1px solid rgba(0, 184, 148, 0.2);
+}
+
+.admin-card {
+    border: 1px solid rgba(0, 184, 148, 0.3);
+    background-color: var(--admin-bg);
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--teal-green);
+    box-shadow: 0 15px 35px rgba(0, 184, 148, 0.2);
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--teal-green);
+    box-shadow: 0 15px 35px rgba(0, 184, 148, 0.3);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+}
+
+.user-card .card-icon {
+    color: var(--teal-green);
+    border: 2px solid rgba(0, 184, 148, 0.2);
+}
+
+.admin-card .card-icon {
+    color: var(--text-light);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.login-card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.user-card:hover .card-icon {
+    background: rgba(0, 184, 148, 0.1);
+    border-color: var(--teal-green);
+}
+
+.admin-card:hover .card-icon {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.login-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--text-light), var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-label-custom {
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.admin-card .form-control-custom {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.form-control-custom:focus {
+    outline: none;
+    border-color: var(--teal-green);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(0, 184, 148, 0.2);
+}
+
+.btn-custom {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.user-card .btn-custom {
+    background: var(--gradient-user);
+    color: white;
+}
+
+.admin-card .btn-custom {
+    background: var(--gradient-admin);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.user-card .btn-custom:hover {
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+}
+
+.admin-card .btn-custom:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+}
+
+.btn-custom:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .login-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-card {
+        max-width: 100%;
+    }
 }

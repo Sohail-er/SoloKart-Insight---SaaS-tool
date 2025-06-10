@@ -3,6 +3,7 @@ import {assets} from "../../assets/assets.js";
 import toast from "react-hot-toast";
 import {addCategory} from "../../Service/CategoryService.js";
 import {AppContext} from "../../context/AppContext.jsx";
+import './CategoryForm.css';
 
 const CategoryForm = () => {
     const {setCategories, categories} = useContext(AppContext);
@@ -45,7 +46,7 @@ const CategoryForm = () => {
                 setImage(false);
             }
         }catch(err) {
-            console.error(err);
+            console.error("Error adding category:", err);
             toast.error("Error adding category");
         }finally {
             setLoading(false);
@@ -53,58 +54,54 @@ const CategoryForm = () => {
     }
 
     return (
-        <div className="mx-2 mt-2">
-            <div className="row">
-                <div className="card col-md-12 form-container">
-                    <div className="card-body">
-                        <form onSubmit={onSubmitHandler}>
-                            <div className="mb-3">
-                                <label htmlFor="image" className="form-label">
-                                    <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" width={48}/>
-                                </label>
-                                <input type="file" name="image" id="image" className='form-control' hidden onChange={(e) => setImage(e.target.files[0])} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="name" className="form-label">Name</label>
-                                <input type="text"
-                                    name="name"
-                                    id="name"
-                                    className="form-control"
-                                    placeholder="Category Name"
-                                    onChange={onChangeHandler}
-                                    value={data.name}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="description" className="form-label">Description</label>
-                                <textarea
-                                        rows="5"
-                                       name="description"
-                                       id="description"
-                                       className="form-control"
-                                       placeholder="Write content here.."
-                                        onChange={onChangeHandler}
-                                        value={data.description}
-                                ></textarea>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="bgcolor" className="form-label">Background color</label>
-                                <br/>
-                                <input type="color"
-                                       name="bgColor"
-                                       id="bgcolor"
-                                       onChange={onChangeHandler}
-                                       value={data.bgColor}
-                                       placeholder="#ffffff"
-                                />
-                            </div>
-                            <button type="submit"
-                                    disabled={loading}
-                                    className="btn btn-warning w-100">{loading ? "Loading..." : "Submit"}</button>
-                        </form>
+        <div className="category-form-wrapper">
+            <div className="category-form-container">
+                <form onSubmit={onSubmitHandler}>
+                    <div className="form-group-custom">
+                        <label htmlFor="image" className="upload-image-label">
+                            <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" />
+                        </label>
+                        <input type="file" name="image" id="image" className='form-control-custom' hidden onChange={(e) => setImage(e.target.files[0])} />
                     </div>
-                </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="name" className="form-label-custom">Name</label>
+                        <input type="text"
+                            name="name"
+                            id="name"
+                            className="form-control-custom"
+                            placeholder="Category Name"
+                            onChange={onChangeHandler}
+                            value={data.name}
+                            required
+                        />
+                    </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="description" className="form-label-custom">Description</label>
+                        <textarea
+                                rows="5"
+                               name="description"
+                               id="description"
+                               className="form-control-custom textarea"
+                               placeholder="Write content here.."
+                                onChange={onChangeHandler}
+                                value={data.description}
+                        ></textarea>
+                    </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="bgcolor" className="form-label-custom">Background color</label>
+                        <input type="color"
+                               name="bgColor"
+                               id="bgcolor"
+                               onChange={onChangeHandler}
+                               value={data.bgColor}
+                               placeholder="#ffffff"
+                               className="form-control-custom"
+                        />
+                    </div>
+                    <button type="submit"
+                            disabled={loading}
+                            className="btn-custom-submit">{loading ? "Loading..." : "Submit"}</button>
+                </form>
             </div>
         </div>
     )

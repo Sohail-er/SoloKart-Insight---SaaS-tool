@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.solokart.entity.CategoryEntity;
+import com.solokart.entity.ItemEntity;
 import com.solokart.io.CategoryRequest;
 import com.solokart.io.CategoryResponse;
 import com.solokart.repository.CategoryRepository;
@@ -57,7 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(String categoryId) {
         CategoryEntity existingCategory = categoryRepository.findByCategoryId(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found: "+categoryId));
-        //fileUploadService.deleteFile(existingCategory.getImgUrl());
+        
+        // Delete all items associated with this category
+        List<ItemEntity> items = itemRepository.findByCategoryId(existingCategory.getId());
+        itemRepository.deleteAll(items);
+        
+        // Delete the category image
         String imgUrl = existingCategory.getImgUrl();
         String fileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1);
         Path uploadPath = Paths.get("uploads").toAbsolutePath().normalize();
@@ -67,6 +73,8 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        // Finally delete the category
         categoryRepository.delete(existingCategory);
     }
 

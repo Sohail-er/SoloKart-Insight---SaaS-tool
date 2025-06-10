@@ -63,8 +63,9 @@ const Menubar = () => {
                 {/*Add the dropdown for userprofile*/}
                 <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li className="nav-item dropdown">
-                        <a href="#" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src={assets.profile} alt="" height={32} width={32} />
+                        <a href="#" className="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src={assets.profile} alt="" height={32} width={32} className="me-2" />
+                            <span className="text-light">{auth.name}</span>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>

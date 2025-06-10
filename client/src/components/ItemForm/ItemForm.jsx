@@ -3,6 +3,7 @@ import {assets} from "../../assets/assets.js";
 import {AppContext} from "../../context/AppContext.jsx";
 import toast from "react-hot-toast";
 import {addItem} from "../../Service/ItemService.js";
+import './ItemForm.css';
 
 const ItemForm = () => {
     const {categories, setItemsData, itemsData, setCategories} = useContext(AppContext);
@@ -58,61 +59,55 @@ const ItemForm = () => {
     }
 
     return (
-        <div className="item-form-container" style={{height:'100vh', overflowY: 'auto', overflowX: 'hidden'}}>
-            <div className="mx-2 mt-2">
-                <div className="row">
-                    <div className="card col-md-12 form-container">
-                        <div className="card-body">
-                            <form onSubmit={onSubmitHandler}>
-                                <div className="mb-3">
-                                    <label htmlFor="image" className="form-label">
-                                        <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" width={48}/>
-                                    </label>
-                                    <input type="file" name="image" id="image" className='form-control' hidden onChange={(e) => setImage(e.target.files[0])} />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">Name</label>
-                                    <input type="text"
-                                           name="name"
-                                           id="name"
-                                           className="form-control"
-                                           placeholder="Item Name"
-                                           onChange={onChangeHandler}
-                                           value={data.name}
-                                           required
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label" htmlFor="category">
-                                        Category
-                                    </label>
-                                    <select name="categoryId" id="category" className="form-control" onChange={onChangeHandler} value={data.categoryId} required>
-                                        <option value="">--SELECT CATEGORY--</option>
-                                        {categories.map((category, index) => (
-                                            <option key={index} value={category.categoryId}>{category.name}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="price" className="form-label">Price</label>
-                                    <input type="number" name="price" id="price" className="form-control" placeholder="&#8377;200.00" onChange={onChangeHandler} value={data.price} required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="description" className="form-label">Description</label>
-                                    <textarea
-                                        rows="5"
-                                        name="description"
-                                        id="description"
-                                        className="form-control"
-                                        placeholder="Write content here.."
-                                        onChange={onChangeHandler}
-                                        value={data.description}></textarea>
-                                </div>
-                                <button type="submit" className="btn btn-warning w-100" disabled={loading}>{loading ? "Loading..." : "Save"}</button>
-                            </form>
-                        </div>
+        <div className="item-form-wrapper">
+            <div className="item-form-container">
+                <form onSubmit={onSubmitHandler}>
+                    <div className="form-group-custom">
+                        <label htmlFor="image" className="upload-image-label">
+                            <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" />
+                        </label>
+                        <input type="file" name="image" id="image" className='form-control-custom' hidden onChange={(e) => setImage(e.target.files[0])} />
                     </div>
-                </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="name" className="form-label-custom">Name</label>
+                        <input type="text"
+                               name="name"
+                               id="name"
+                               className="form-control-custom"
+                               placeholder="Item Name"
+                               onChange={onChangeHandler}
+                               value={data.name}
+                               required
+                        />
+                    </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="category" className="form-label-custom">
+                            Category
+                        </label>
+                        <select name="categoryId" id="category" className="form-control-custom" onChange={onChangeHandler} value={data.categoryId} required>
+                            <option value="">--SELECT CATEGORY--</option>
+                            {categories.map((category, index) => (
+                                <option key={index} value={category.categoryId}>{category.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="price" className="form-label-custom">Price</label>
+                        <input type="number" name="price" id="price" className="form-control-custom" placeholder="₹200.00" onChange={onChangeHandler} value={data.price} required/>
+                    </div>
+                    <div className="form-group-custom">
+                        <label htmlFor="description" className="form-label-custom">Description</label>
+                        <textarea
+                            rows="5"
+                            name="description"
+                            id="description"
+                            className="form-control-custom textarea"
+                            placeholder="Write content here.."
+                            onChange={onChangeHandler}
+                            value={data.description}></textarea>
+                    </div>
+                    <button type="submit" className="btn-custom-submit" disabled={loading}>{loading ? "Loading..." : "Save"}</button>
+                </form>
             </div>
         </div>
     )

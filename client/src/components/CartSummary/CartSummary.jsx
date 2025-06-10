@@ -62,6 +62,7 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
             toast.error("Your cart is empty");
             return;
         }
+
         const orderData = {
             customerName,
             phoneNumber: mobileNumber,
@@ -71,23 +72,37 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
             grandTotal,
             paymentMethod: paymentMode.toUpperCase()
         }
+
         setIsProcessing(true);
         try {
-
+            console.log('Current user token:', localStorage.getItem('token'));
+            console.log('Sending order data:', orderData);
             const response = await createOrder(orderData);
+            console.log('Order creation response:', response);
+            
+            if (!response.data) {
+                throw new Error('No data received from server');
+            }
+
             const savedData = response.data;
-            if (response.status === 201 && paymentMode === "cash") {
+            console.log('Saved order data:', savedData);
+
+            if (paymentMode === "cash") {
+                // For cash payments, just show success and set order details
                 toast.success("Cash received");
                 setOrderDetails(savedData);
-            } else if (response.status === 201 && paymentMode === "upi") {
+                setIsProcessing(false);
+            } else if (paymentMode === "upi") {
+                // For UPI payments, proceed with Razorpay
                 const razorpayLoaded = await loadRazorpayScript();
                 if (!razorpayLoaded) {
                     toast.error('Unable to load razorpay');
                     await deleteOrderOnFailure(savedData.orderId);
+                    setIsProcessing(false);
                     return;
                 }
 
-                //create razorpay order
+                // Create razorpay order
                 const razorpayResponse = await createRazorpayOrder({amount: grandTotal, currency: 'INR'});
                 const options = {
                     key: AppConstants.RAZORPAY_KEY_ID,
@@ -97,7 +112,7 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                     name: "My Retail Shop",
                     description: "Order payment",
                     handler: async function (response) {
-                        await verifyPaymentHandler(response,  savedData);
+                        await verifyPaymentHandler(response, savedData);
                     },
                     prefill: {
                         name: customerName,
@@ -110,6 +125,7 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                         ondismiss: async () => {
                             await deleteOrderOnFailure(savedData.orderId);
                             toast.error("Payment cancelled");
+                            setIsProcessing(false);
                         }
                     },
                 };
@@ -118,13 +134,13 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                     await deleteOrderOnFailure(savedData.orderId);
                     toast.error("Payment failed");
                     console.error(response.error.description);
+                    setIsProcessing(false);
                 });
                 rzp.open();
             }
-        }catch(error) {
-            console.error(error);
-            toast.error("Payment processing failed");
-        } finally {
+        } catch(error) {
+            console.error('Payment processing error:', error);
+            toast.error(error.response?.data?.message || "Payment processing failed");
             setIsProcessing(false);
         }
     }
@@ -148,12 +164,15 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                         razorpaySignature: response.razorpay_signature
                     },
                 });
-            }else {
+                setIsProcessing(false);
+            } else {
                 toast.error("Payment processing failed");
+                setIsProcessing(false);
             }
         } catch (error) {
             console.error(error);
             toast.error("Payment failed");
+            setIsProcessing(false);
         }
     };
 
@@ -177,15 +196,15 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
             <div className="d-flex gap-3">
                 <button className="btn btn-success flex-grow-1"
                     onClick={() => completePayment("cash")}
-                        disabled={isProcessing}
+                    disabled={isProcessing}
                 >
-                    {isProcessing ? "Processing...": "Cash"}
+                    {isProcessing ? "Processing..." : "Cash"}
                 </button>
                 <button className="btn btn-primary flex-grow-1"
-                        onClick={() => completePayment("upi")}
-                        disabled={isProcessing}
+                    onClick={() => completePayment("upi")}
+                    disabled={isProcessing}
                 >
-                    {isProcessing ? "Processing...": "UPI"}
+                    {isProcessing ? "Processing..." : "UPI"}
                 </button>
             </div>
             <div className="d-flex gap-3 mt-3 pb-3">
@@ -196,21 +215,16 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
                     Place Order
                 </button>
             </div>
-            {
-                showPopup && (
-                    <ReceiptPopup
-                        orderDetails={{
-                            ...orderDetails,
-                            razorpayOrderId: orderDetails.paymentDetails?.razorpayOrderId,
-                            razorpayPaymentId: orderDetails.paymentDetails?.razorpayPaymentId,
-                        }}
-                        onClose={() => setShowPopup(false)}
-                        onPrint={handlePrintReceipt}
-                    />
-                )
-            }
+
+            {showPopup && orderDetails && (
+                <ReceiptPopup
+                    orderDetails={orderDetails}
+                    onClose={() => setShowPopup(false)}
+                    onPrint={handlePrintReceipt}
+                />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default CartSummary;

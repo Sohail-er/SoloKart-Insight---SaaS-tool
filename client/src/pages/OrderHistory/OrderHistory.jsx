@@ -63,7 +63,7 @@ const OrderHistory = () => {
                 <h2 className="mb-2 text-light">All Orders (Grouped by User)</h2>
                 {Object.keys(groupedOrders).map(user => (
                     <div key={user} style={{marginBottom: "2rem"}}>
-                        <h4 className="text-primary">{user}</h4>
+                        <h4 className="user-name-admin">{user}</h4>
                         <div className="table-responsive">
                             <table className="table table-striped table-hover">
                                 <thead className="table-dark">

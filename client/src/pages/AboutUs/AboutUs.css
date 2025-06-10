@@ -1,0 +1,187 @@
+.about-us-container {
+    background: #1a1d20;
+    width: 100%;
+    min-height: 100vh;
+    padding: 1rem 0;
+}
+
+.about-us-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.about-us-title {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.team-member-card {
+    background: linear-gradient(145deg, #2c3338, #343a40);
+    border-radius: 15px;
+    padding: 1rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-member-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, rgba(0, 184, 148, 0.1), rgba(0, 216, 167, 0.1));
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.team-member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: #00b894;
+}
+
+.team-member-card:hover::before {
+    opacity: 1;
+}
+
+.member-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.team-member-card:hover .member-image {
+    transform: scale(1.05);
+    border-color: #00b894;
+    box-shadow: 0 0 20px rgba(0, 184, 148, 0.3);
+}
+
+.member-name {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.team-member-card:hover .member-name {
+    color: #00b894;
+}
+
+.member-description {
+    color: #e9ecef;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.github-link {
+    color: #00b894;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    background: rgba(0, 184, 148, 0.1);
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(0, 184, 148, 0.2);
+    font-size: 0.9rem;
+}
+
+.github-link:hover {
+    color: #ffffff;
+    background: #00b894;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+}
+
+.contact-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.contact-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    color: #e9ecef;
+    font-size: 0.85rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e9ecef;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    color: #00b894;
+}
+
+.contact-icon {
+    font-size: 0.9rem;
+    color: #00b894;
+}
+
+@media (max-width: 768px) {
+    .about-us-content {
+        padding: 0.75rem;
+    }
+
+    .team-member-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .member-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .member-name {
+        font-size: 1.1rem;
+    }
+
+    .member-description {
+        font-size: 0.8rem;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+} 

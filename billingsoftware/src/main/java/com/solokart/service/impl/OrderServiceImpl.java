@@ -44,8 +44,14 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setUser(currentUser);
 
         PaymentDetails paymentDetails = new PaymentDetails();
-        paymentDetails.setStatus(newOrder.getPaymentMethod() == PaymentMethod.CASH ?
-                PaymentDetails.PaymentStatus.COMPLETED : PaymentDetails.PaymentStatus.PENDING);
+        if (newOrder.getPaymentMethod() == PaymentMethod.CASH) {
+            paymentDetails.setStatus(PaymentDetails.PaymentStatus.COMPLETED);
+            paymentDetails.setRazorpayOrderId("CASH_" + System.currentTimeMillis());
+            paymentDetails.setRazorpayPaymentId("CASH_" + System.currentTimeMillis());
+            paymentDetails.setRazorpaySignature("CASH_PAYMENT");
+        } else {
+            paymentDetails.setStatus(PaymentDetails.PaymentStatus.PENDING);
+        }
         newOrder.setPaymentDetails(paymentDetails);
         
         List<OrderItemEntity> orderItems = request.getCartItems().stream()

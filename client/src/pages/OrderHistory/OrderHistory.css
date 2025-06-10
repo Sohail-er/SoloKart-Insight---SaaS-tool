@@ -28,6 +28,13 @@
     padding: 5px 8px;
 }
 
+.user-name-admin {
+    color: #00b894; /* Teal green color */
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
 @media (max-width: 768px) {
     .table-responsive {
         overflow-x: auto;
