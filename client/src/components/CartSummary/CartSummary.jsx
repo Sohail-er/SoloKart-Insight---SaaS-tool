@@ -52,9 +52,32 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
         }
     }
 
+    const validateCustomerDetails = () => {
+        // Validate customer name
+        if (!customerName.trim()) {
+            toast.error("Please enter customer name");
+            return false;
+        }
+        if (!/^[a-zA-Z\s]{2,50}$/.test(customerName)) {
+            toast.error("Please enter a valid customer name (2-50 letters and spaces only)");
+            return false;
+        }
+
+        // Validate phone number
+        if (!mobileNumber.trim()) {
+            toast.error("Please enter phone number");
+            return false;
+        }
+        if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+            toast.error("Please enter a valid phone number");
+            return false;
+        }
+
+        return true;
+    };
+
     const completePayment = async (paymentMode) => {
-        if (!customerName || !mobileNumber) {
-            toast.error("Please enter customer details");
+        if (!validateCustomerDetails()) {
             return;
         }
 
