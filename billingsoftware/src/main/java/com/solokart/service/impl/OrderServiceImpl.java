@@ -241,8 +241,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<SalesByUserResponse> getTotalSalesGroupedByUser() {
         List<Object[]> results = orderEntityRepository.findTotalSalesGroupedByUser();
+        LocalDate today = LocalDate.now();
+        
         return results.stream()
-                .map(obj -> new SalesByUserResponse((String) obj[0], (Double) obj[1]))
+                .map(obj -> {
+                    String userName = (String) obj[0];
+                    Double totalSales = (Double) obj[1];
+                    Double todaySales = orderEntityRepository.sumSalesByDateAndUserName(today, userName);
+                    return new SalesByUserResponse(userName, totalSales, todaySales);
+                })
                 .collect(Collectors.toList());
     }
 }

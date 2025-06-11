@@ -95,7 +95,9 @@ const UserForm = ({setUsers}) => {
             <div className="user-form-container">
                 <form onSubmit={onSubmitHandler}>
                     <div className="form-group-custom">
-                        <label htmlFor="name" className="form-label-custom">Name</label>
+                        <label htmlFor="name" className="form-label-custom">
+                            Name <span className="text-danger">*</span>
+                        </label>
                         <input type="text"
                                name="name"
                                id="name"
@@ -107,7 +109,9 @@ const UserForm = ({setUsers}) => {
                         />
                     </div>
                     <div className="form-group-custom">
-                        <label htmlFor="email" className="form-label-custom">Email</label>
+                        <label htmlFor="email" className="form-label-custom">
+                            Email <span className="text-danger">*</span>
+                        </label>
                         <input type="email"
                                name="email"
                                id="email"
@@ -122,7 +126,9 @@ const UserForm = ({setUsers}) => {
                         )}
                     </div>
                     <div className="form-group-custom" style={{position: 'relative'}}>
-                        <label htmlFor="password" className="form-label-custom">Password</label>
+                        <label htmlFor="password" className="form-label-custom">
+                            Password <span className="text-danger">*</span>
+                        </label>
                         <input
                                type={showPassword ? "text" : "password"}
                                name="password"

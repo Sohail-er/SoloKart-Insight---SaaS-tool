@@ -87,6 +87,14 @@ body, html {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.stat-content small {
+    display: block;
+    color: #00b894;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
 .recent-orders-card {
     background: linear-gradient(145deg, #2c3338, #343a40);
     border-radius: 15px;
